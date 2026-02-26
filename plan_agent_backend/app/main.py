@@ -11,6 +11,7 @@ from app.routers import (
     ai,
     execution,
     tasks,
+    goals,
     reflection,
     fixed_schedules,
     friends,
@@ -24,7 +25,6 @@ from app.scheduler import start_scheduler, shutdown_scheduler
 from app.exceptions import register_exception_handlers
 from app.middleware.security import register_security_middlewares
 from app.monitoring.prometheus import register_prometheus
-from app.middleware.security import register_security_middlewares
 
 
 @asynccontextmanager
@@ -58,7 +58,6 @@ register_exception_handlers(app)
 
 # 注册 Prometheus 监控
 register_prometheus(app)
-register_exception_handlers(app)
 
 # 注册路由
 app.include_router(auth.router, prefix=settings.API_PREFIX)
@@ -70,6 +69,7 @@ app.include_router(ai.router, prefix=settings.API_PREFIX)
 app.include_router(agent_router, prefix=settings.API_PREFIX)
 app.include_router(execution.router, prefix=settings.API_PREFIX)
 app.include_router(tasks.router, prefix=settings.API_PREFIX)
+app.include_router(goals.router, prefix=settings.API_PREFIX)
 app.include_router(reflection.router, prefix=settings.API_PREFIX)
 app.include_router(fixed_schedules.router, prefix=settings.API_PREFIX)
 app.include_router(friends.router, prefix=settings.API_PREFIX)
@@ -97,10 +97,11 @@ async def detailed_health_check():
 
     # 检查数据库连接
     try:
+        from sqlalchemy import text
         from app.dependencies import engine
 
         with engine.connect() as conn:
-            conn.execute("SELECT 1")
+            conn.execute(text("SELECT 1"))
         health_status["checks"]["database"] = {"status": "ok"}
     except Exception as e:
         health_status["checks"]["database"] = {"status": "error", "error": str(e)}

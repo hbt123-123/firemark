@@ -47,10 +47,10 @@ goals_created_total = Counter("goals_created_total", "Total goals created")
 ai_requests_total = Counter(
     "ai_requests_total",
     "Total AI requests",
-    ["intent", "status_duration_seconds = Hist"],
+    ["intent", "status"],
 )
 
-ai_requestogram(
+ai_request_duration_seconds = Histogram(
     "ai_request_duration_seconds",
     "AI request duration in seconds",
     ["intent"],

@@ -1,4 +1,9 @@
+from __future__ import annotations
+
 from pydantic import BaseModel, Field, field_validator
+from typing import Optional, List
+from datetime import datetime, date
+import re
 from typing import Optional, List
 from datetime import datetime, date
 import re
@@ -256,7 +261,7 @@ class WordCompleteRequest(BaseModel):
     """单词完成请求"""
 
     word_id: int = Field(..., description="完成的单词ID")
-    date: Optional[date] = Field(default=None, description="日期，格式YYYY-MM-DD，默认当天")
+    date: Optional[date] = None
 
 
 class WordCompleteResponse(BaseModel):

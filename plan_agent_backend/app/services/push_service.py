@@ -6,7 +6,7 @@ from typing import Any
 from app.services.llm_service import llm_service
 from app.dependencies import SessionLocal
 from app.models import User, Task, ExecutionLog
-from app.tools.send_notification_tool import SendNotificationTool
+from app.agent.tools.send_notification_tool import SendNotificationTool
 
 
 class PushService:
