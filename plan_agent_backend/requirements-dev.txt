@@ -17,8 +17,8 @@ respx==0.20.2
 Faker==20.1.0
 
 # 覆盖率报告
-coverage==7.3.4
-coveralls==3.2.0
+coverage==7.4.0
+coveralls==4.0.1
 
 # 性能测试
 locust==2.17.0
